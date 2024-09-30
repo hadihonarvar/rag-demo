@@ -1,0 +1,18 @@
+# python v 3.12.4
+numpy==2.1.1
+pandas==2.2.3
+protobuf==4.21.6
+typing-extensions==4.12.1
+python-dotenv==1.0.0
+fastapi==0.115.0
+openai==1.50.2
+qdrant-client==1.9.1
+coloredlogs==15.0.1
+torch==2.2.2
+transformers==4.41.1
+accelerate==0.30.1
+pydantic-settings==2.2.1
+beautifulsoup4==4.12.3
+scikit-learn==1.5.2
+asyncpg==0.29.0
+uvicorn==0.31.0
