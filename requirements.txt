@@ -1,5 +1,5 @@
 # python v 3.12.4
-numpy==2.1.1
+numpy==1.26.4
 pandas==2.2.3
 protobuf==4.21.6
 typing-extensions==4.12.1

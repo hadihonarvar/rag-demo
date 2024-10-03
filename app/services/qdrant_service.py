@@ -5,7 +5,7 @@ from qdrant_client import QdrantClient, models
 from qdrant_client.http.models import PointStruct, VectorParams
 from app.utils.logger import log
 import uuid
-from app.config import settings
+# from app.config import settings
 
 
 qd_client = QdrantClient(url=f"{0}:{0}")

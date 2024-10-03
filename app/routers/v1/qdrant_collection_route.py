@@ -10,8 +10,8 @@ from transformers import AutoTokenizer, AutoModel
 import torch
 
 
-router = APIRouter('/qdrant/collections')
-client = QdrantClient(hrl='http://localhost:6333')
+router = APIRouter(prefix='/qdrant/collections')
+client = QdrantClient(url='http://localhost:6333')
 
 class Collection(BaseModel):
     name: str
@@ -29,19 +29,11 @@ class QueryPoint(BaseModel):
     
 @router.get("")
 async def qdrant_root():
-    model_name = "huggingface/llama-3b"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModel.from_pretrained(model_name)
-    
-    def get_embedding(text):
-        inputs = tokenizer(text, return_tensors="pt")
-        outputs = model(**inputs)
-        return outputs.last_hidden_state.mean(dim=1).detach().numpy().tolist()
-
-    text_chunk = "sample product info"
-    
-    return get_embedding(text_chunk)
-
+    log.info("Welcome to Qdrant")
+    from app.services.openAI_service import get_openAI_embedding
+    log.info("Getting embedding1")
+    emb = await get_openAI_embedding("sample product info")
+    return {"message": "Welcome to Qdrant", "embedding": emb}
 
 # collection operations
 
