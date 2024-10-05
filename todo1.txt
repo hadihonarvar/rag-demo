@@ -1,0 +1,21 @@
+create 10 products json {name, description, price, reviews, photoUrl, photoDescription, meta}
+store their info in psql, tables: product, store, reviews, 
+store their vectors in vector db, get id from psql
+
+setup quadrant cloud 
+host client and backend prod 
+
+db vector sql connector 
+routers 
+project setup 
+list set of product and descirtopns 
+vectorize descirtopns and title etc 
+retrival nearest vectors 
+mapping vectors to sql row 
+return product/s info, list or single 
+client basics 
+
+keyword matching search, synonyms 
+
+client voice 
+pagination for results 

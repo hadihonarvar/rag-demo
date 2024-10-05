@@ -1,0 +1,37 @@
+s3 bucket to write but public read 
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1687476558735",
+    "Statement": [
+        {
+            "Sid": "Stmt1687476508486",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::homestaile-house-app",
+                "arn:aws:s3:::homestaile-house-app/*"
+            ]
+        },
+        {
+            "Sid": "AllowRootUserUpload",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": [
+                "arn:aws:s3:::homestaile-house-app",
+                "arn:aws:s3:::homestaile-house-app/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
+        }
+    ]
+}

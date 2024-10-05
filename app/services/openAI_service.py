@@ -41,3 +41,24 @@ async def get_openAI_embedding(text: str):
     # text_chunk = "sample product info"
     
     # return get_embedding(text_chunk)
+
+async def get_openAI_image_description():
+    response = openai.completions.create(
+        model="text-davinci-003",
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "what is in the image?"},
+                    {
+                        "type": "image",
+                        "url": "https://images.unsplash.com/photo-1551316679-9c6ae9dec224"
+                    }
+                ]
+            },
+        ],
+        max_token=300
+    )
+
+    return response.choices[0]
+

@@ -8,6 +8,7 @@ import uuid
 from app.services import qdrant_service
 from transformers import AutoTokenizer, AutoModel
 import torch
+from app.services.openAI_service import get_openAI_embedding
 
 
 router = APIRouter(prefix='/qdrant/collections')
@@ -30,7 +31,6 @@ class QueryPoint(BaseModel):
 @router.get("")
 async def qdrant_root():
     log.info("Welcome to Qdrant")
-    from app.services.openAI_service import get_openAI_embedding
     log.info("Getting embedding1")
     emb = await get_openAI_embedding("sample product info")
     return {"message": "Welcome to Qdrant", "embedding": emb}
