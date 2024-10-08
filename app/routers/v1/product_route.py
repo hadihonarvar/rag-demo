@@ -8,16 +8,8 @@ import uuid
 from sqlalchemy.orm import Session
 from app.databases.psql_db import get_psql_db
 from app.databases.qdrant_db import get_qdrant_db
-
-class ProductDTO(BaseModel):
-    name: str
-    title: str
-    description: str
-    price: float
-    assets: List[str]
-    reviews: List[str]
-    rating: float
-    store: uuid
+from app.services import product_service
+from app.DTO.product_dto import ProductDTO
 
     
 router = APIRouter(prefix='/api/product')
@@ -25,9 +17,9 @@ router = APIRouter(prefix='/api/product')
 # create, get, update, delete, product from psql and qdrant.
 
 @router.post("/create_product")
-async def create_product(product: ProductDTO, psql_db_session: Session = Depends(get_psql_db), qdrant_db_session: QdrantClient = Depends(get_qdrant_db)):
-    log.info(f"Creating product {product.name}")
-    product = await create_product(product, psql_db_session, qdrant_db_session)
+async def create_product(productDTO: ProductDTO, psql_db_session: Session = Depends(get_psql_db), qdrant_db_session: QdrantClient = Depends(get_qdrant_db)):
+    log.info(f"Creating product {productDTO.name}")
+    product = await product_service.create_product(productDTO, psql_db_session, qdrant_db_session)
     return {"message": "Product created successfully"}
 
 @router.get("/get_product/{product_id}")

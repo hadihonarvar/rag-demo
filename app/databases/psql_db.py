@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import settings
 from app.utils.logger import log
 
@@ -8,6 +8,7 @@ DATABASE_URL = f'postgresql+asyncpg://{settings.DB_PSQL_USER}:{settings.DB_PSQL_
 # Create async engine and session
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
+Base = declarative_base()
 
 async def get_psql_db():
     async with SessionLocal() as session:

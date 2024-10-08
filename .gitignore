@@ -16,3 +16,4 @@ vscode
 todo.txt
 experiment/**
 qdrant
+storage/**

@@ -8,7 +8,7 @@ qdrant_client = QdrantClient(
     port=settings.DB_QDRANT_PORT,
 )
 
-async def init_qdrant_db(app):
+async def get_qdrant_db(app):
     @app.on_event("startup")
     async def startup_event():
         log.info("Connecting to Qdrant")

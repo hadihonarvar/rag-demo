@@ -17,15 +17,15 @@ openai.api_key = settings.OPENAI_API_KEY
 
 async def get_openAI_embedding(text: str):
     log.info(f">>>>>Getting embedding for {text}")
-    res = openai.embeddings.create(model="text-embedding-ada-002", input=[text])
-    log.info(f">>>>>Response: {res}")
-    return res
-    response = openai.Embedding.create(
-        model="text-embedding-ada-002",
-        input=text
-    )
-    log.ingo(f">>>>>Response: {response}") 
-    return response
+    response = await openai.embeddings.create(model="text-embedding-ada-002", input=[text])
+    log.info(f">>>>>Response: {response}")
+    # return res
+    # response = openai.Embedding.create(
+    #     model="text-embedding-ada-002",
+    #     input=text
+    # )
+    # log.ingo(f">>>>>Response: {response}") 
+    # return response
     return response['data'][0]['embedding']
 
 # async def get_embedding_tmp(text: str) -> List[float]:
