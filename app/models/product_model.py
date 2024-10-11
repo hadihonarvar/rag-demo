@@ -22,9 +22,18 @@ class Product(Base):
     # store_id = Column(Integer, ForeignKey('stores.id'))
     # store = relationship("Store", back_populates="products")
     
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "rating": self.rating
+        }
+    
+    
 
 class ProductPoint(BaseModel):
     id: uuid.UUID
     vector: List[float]
     payload: dict
-

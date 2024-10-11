@@ -3,9 +3,13 @@ from app.config import settings
 from app.utils.logger import log
 
 # Initialize Qdrant Client
+# qdrant_client = QdrantClient(
+#     host=settings.DB_QDRANT_HOST,
+#     port=settings.DB_QDRANT_PORT,
+# )
 qdrant_client = QdrantClient(
-    host=settings.DB_QDRANT_HOST,
-    port=settings.DB_QDRANT_PORT,
+    url=settings.DB_QDRANT_API_URL,
+    api_key=settings.DB_QDRANT_API_KEY,
 )
 
 async def get_qdrant_db(app):

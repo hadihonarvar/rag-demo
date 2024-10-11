@@ -3,10 +3,11 @@ from app.config import settings
 log.info(f"Starting server on {settings}")
 import uvicorn
 from fastapi import FastAPI
-# from app.database.postgres import db as psql_db
-from app.routers.v1 import qdrant_collection_route
+# from app.databases.postgres import db as psql_db
+from app.routers.v1 import qdrant_route
 from app import create_app
 from app.utils.logger import log
+
 app = create_app()
 
 # @app.on_event("startup")

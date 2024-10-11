@@ -16,23 +16,25 @@ class Settings(BaseSettings):
     ENV: Optional[str] = 'local'
     
     FASTAPI_HOST: Optional[str] = ''
-    FASTAPI_PORT: Optional[str] = '9000'
+    FASTAPI_PORT: Optional[str] = ''
     
     cors_origins: Optional[str] = ''
     cors_methods: Optional[str] = ''
     cors_headers: Optional[str] = ''
     
-    DB_PSQL_NAME: Optional[str] = 'postgres'
-    DB_PSQL_HOST: Optional[str] = 'localhost'
-    DB_PSQL_PORT: Optional[str] = '5432'
-    DB_PSQL_USER: Optional[str] = 'postgres'
-    DB_PSQL_PASSWORD: Optional[str] = 'password'
+    DB_PSQL_NAME: Optional[str] = ''
+    DB_PSQL_HOST: Optional[str] = ''
+    DB_PSQL_PORT: Optional[str] = ''
+    DB_PSQL_USER: Optional[str] = ''
+    DB_PSQL_PASSWORD: Optional[str] = ''
     
-    DB_QDRANT_NAME: Optional[str] = 'qdrant'
-    DB_QDRANT_HOST: Optional[str] = 'localhost'
-    DB_QDRANT_PORT: Optional[str] = '6333'
-    DB_QDRANT_USER: Optional[str] = 'admin'
-    DB_QDRANT_PASSWORD: Optional[str] = 'password'
+    DB_QDRANT_NAME: Optional[str] = ''
+    DB_QDRANT_HOST: Optional[str] = ''
+    DB_QDRANT_PORT: Optional[str] = ''
+    DB_QDRANT_USER: Optional[str] = ''
+    DB_QDRANT_PASSWORD: Optional[str] = ''
+    DB_QDRANT_API_URL: Optional[str] = ''
+    DB_QDRANT_API_KEY: Optional[str] = ''
     
     OPENAI_API_KEY: Optional[str] = ''
     

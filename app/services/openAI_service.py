@@ -16,17 +16,17 @@ openai.api_key = settings.OPENAI_API_KEY
 #   }'
 
 async def get_openAI_embedding(text: str):
-    log.info(f">>>>>Getting embedding for {text}")
-    response = await openai.embeddings.create(model="text-embedding-ada-002", input=[text])
-    log.info(f">>>>>Response: {response}")
+    log.info(f"Getting embedding for {text}")
+    response = openai.embeddings.create(model="text-embedding-ada-002", input=[text]) # embedding size: 1536
+    # log.info(f"Embedding Response: {response}")
     # return res
     # response = openai.Embedding.create(
     #     model="text-embedding-ada-002",
     #     input=text
     # )
-    # log.ingo(f">>>>>Response: {response}") 
-    # return response
-    return response['data'][0]['embedding']
+    log.info(f"Response: {len(response.data[0].embedding)}") 
+
+    return response.data[0].embedding
 
 # async def get_embedding_tmp(text: str) -> List[float]:
     # model_name = "huggingface/llama-3b"

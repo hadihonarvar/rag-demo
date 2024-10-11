@@ -11,6 +11,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, clas
 Base = declarative_base()
 
 async def get_psql_db():
+    log.info("Creating PostgreSQL session")
     async with SessionLocal() as session:
         yield session
 

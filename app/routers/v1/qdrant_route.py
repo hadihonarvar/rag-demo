@@ -9,11 +9,10 @@ from app.services import qdrant_service
 from transformers import AutoTokenizer, AutoModel
 import torch
 from app.services.openAI_service import get_openAI_embedding
+from app.databases.qdrant_db import get_qdrant_db, qdrant_client
 
 
-router = APIRouter(prefix='/qdrant/collections')
-client = QdrantClient(url='http://localhost:6333')
-
+router = APIRouter(prefix='/api/qdrant/collections')
 class Collection(BaseModel):
     name: str
     size: int
@@ -32,7 +31,7 @@ class QueryPoint(BaseModel):
 async def qdrant_root():
     log.info("Welcome to Qdrant")
     log.info("Getting embedding1")
-    emb = await get_openAI_embedding("sample product info")
+    emb = get_openAI_embedding("sample product info")
     return {"message": "Welcome to Qdrant", "embedding": emb}
 
 # collection operations
@@ -42,35 +41,39 @@ async def qdrant_root():
 async def create_collection(collection: Collection):
     log.info(f"Creating collection {collection.name}")
     collection = await qdrant_service.create_collection(collection)
+    log.info(f"Collection created: {collection}")
+    # jsonify collection response
     return {"status": "success", "collection": collection}
-
+ 
 
 # TODO: adding proper params
 @router.post("/update_collection")
 async def update_collection(collection: Collection):
     log.info(f"Updating collection {collection.name}")
-    collection = await qdrant_service.update_collection(collection)
+    collection = qdrant_service.update_collection(collection)
     return {"status": "success", "collection": collection}
+
 
 # curl -X GET "http://localhost:9000/qdrant/collections/get_collections"
 @router.get("/get_collections")
 async def get_collections():
     log.info(f"Getting all collections")
-    collections = await qdrant_service.get_collections()
+    collections = qdrant_service.get_collections()
     return {"status": "success", "collections": collections}
+
 
 # curl -X GET "http://localhost:9000/qdrant/collections/get_collection?name=products"
 @router.get("/get_collection")
 async def get_collection(name: str):
     log.info(f"Getting collection {name}")
-    collection = await qdrant_service.get_collection(name)
+    collection = qdrant_service.get_collection(name)
     return {"status": "success", "collection": collection}
 
 # curl -X DELETE "http://localhost:9000/qdrant/collections/delete_collection?name=products"
 @router.delete("/delete_collection")
 async def delete_collection(name: str):
     log.info(f"Deleting collection {name}")
-    collection = await qdrant_service.delete_collection(name)
+    collection = qdrant_service.delete_collection(name)
     return {"status": "success", "collection": collection}
 
 # point operations
@@ -79,40 +82,40 @@ async def delete_collection(name: str):
 @router.post("/add_point")
 async def add_point(collection_name: str, point: Point):
     log.info(f"Adding point to collection {collection_name}")
-    point = await qdrant_service.add_point(collection_name, point)
+    point = qdrant_service.add_point(collection_name, point)
     return {"status": "success", "point": point}
 
 # curl -X POST "http://localhost:9000/qdrant/collections/get_point" -H  "Content-Type: application/json" --data-raw '{"collection_name": "products", "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"}'
 @router.post("/get_point")
 async def get_point(collection_name: str, id: UUID4):
     log.info(f"Getting point from collection {collection_name}")
-    point = await qdrant_service.get_point(collection_name, id)
+    point = qdrant_service.get_point(collection_name, id)
     return {"status": "success", "point": point}
 
 # curl -X POST "http://localhost:9000/qdrant/collections/get_points" -H  "Content-Type: application/json" --data-raw '{"collection_name": "products", "ids": ["1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"]}'
 @router.post("/get_points")
 async def get_points(collection_name: str, ids: List[UUID4]):
     log.info(f"Getting points from collection {collection_name}")
-    points = await qdrant_service.get_points(collection_name, ids)
+    points = qdrant_service.get_points(collection_name, ids)
     return {"status": "success", "points": points}
 
 # curl -X POST "http://localhost:9000/qdrant/collections/get_all_points" -H  "Content-Type: application/json" --data-raw '{"collection_name": "products"}'
 @router.post("/get_all_points")
 async def get_all_points(collection_name: str):
     log.info(f"Getting all points from collection {collection_name}")
-    points = await qdrant_service.get_all_points(collection_name)
+    points = qdrant_service.get_all_points(collection_name)
     return {"status": "success", "points": points}
 
 # curl -X POST "http://localhost:9000/qdrant/collections/delete_point" -H  "Content-Type: application/json" --data-raw '{"collection_name": "products", "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"}'
 @router.post("/delete_point")
 async def delete_point(collection_name: str, id: UUID4):
     log.info(f"Deleting point from collection {collection_name}")
-    point = await qdrant_service.delete_point(collection_name, id)
+    point = qdrant_service.delete_point(collection_name, id)
     return {"status": "success", "point": point}
 
 # curl -X POST "http://localhost:9000/qdrant/collections/query_point" -H  "Content-Type: application/json" --data-raw '{"collection_name": "products", "point": {"vector": [1, 2, 3], "top": 10}}'
 @router.post("/query_point")
 async def query_point(collection_name: str, point: QueryPoint):
     log.info(f"Querying point from collection {collection_name}")
-    points = await qdrant_service.query_point(collection_name, point)
+    points = qdrant_service.query_point(collection_name, point)
     return {"status": "success", "points": points}
