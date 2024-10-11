@@ -19,6 +19,7 @@ router = APIRouter(prefix='/api/product')
 @router.post("/create_product")
 async def create_product(productDTO: ProductDTO, psql_db_session: Session = Depends(get_psql_db)):
     log.info(f"Creating product {productDTO.name}")
+    # qdrant_service.add_point(collection_name, point)
     product = await product_service.create_product(productDTO, psql_db_session)
     return {"message": "Product created successfully"}
 
