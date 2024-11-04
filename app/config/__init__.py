@@ -10,7 +10,7 @@ EnvType = Literal['local', 'dev', 'prod']
 
 class Settings(BaseSettings):
     app_name: Optional[str] = 'Demo Store'
-    author: Optional[str] = 'Mamamd Agha'
+    author: Optional[str] = 'Javad Agha'
     environment: Optional[str] = 'local'
     
     ENV: Optional[str] = 'local'
@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     DB_PSQL_PORT: Optional[str] = ''
     DB_PSQL_USER: Optional[str] = ''
     DB_PSQL_PASSWORD: Optional[str] = ''
+    DB_PSQL_URL: Optional[str] = ''
     
     DB_QDRANT_NAME: Optional[str] = ''
     DB_QDRANT_HOST: Optional[str] = ''

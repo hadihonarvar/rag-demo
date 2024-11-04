@@ -2,12 +2,8 @@ create 10 products json {name, description, price, reviews, photoUrl, photoDescr
 store their info in psql, tables: product, store, reviews, 
 store their vectors in vector db, get id from psql
 
-setup quadrant cloud 
 host client and backend prod 
 
-db vector sql connector 
-routers 
-project setup 
 list set of product and descirtopns 
 vectorize descirtopns and title etc 
 retrival nearest vectors 
@@ -15,7 +11,52 @@ mapping vectors to sql row
 return product/s info, list or single 
 client basics 
 
-keyword matching search, synonyms 
+adapters for parsing data.
+https://chatgpt.com/c/670ee3f2-e1f0-8004-9ec0-c61e152f5c07
 
+>>> read data from shopify store and save it in vector and psql db. 
+
+keyword matching search, synonyms 
 client voice 
 pagination for results 
+
+
+done: 
+config:
+    - env sepration dev local prod done
+    - run scripts per environment done
+migrations:
+    - psql done 
+    - qdrant (left)
+controller/router layer 
+    - qdrant crud 
+    - product crud 
+    - store (left)
+service layer 
+    - aws (left)
+    - openAI get embedding done
+    - openAI prompt response no need yet. 
+    - product crud partially, needs qudrant and psql integration 
+    - store (left)
+    - shopify (left, needs experiment and integration)
+
+models
+    - psql product done 
+    - psql store left 
+    - psql assets left 
+    - qdrant collection, point, vector done 
+
+DAO psql layer 
+    - product crud done
+    - store crud (left)
+    - advance sqls and specifications (left) for keyword search and fileters etc. 
+
+misc
+    - logger done 
+    - project set up done 
+    - docker (left)
+    - api and build versioning done 
+
+
+
+

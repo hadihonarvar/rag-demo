@@ -68,3 +68,9 @@ fi
 # CREATE USER "postgres-user" WITH PASSWORD 'password';
 # CREATE DATABASE search_app_psql_db OWNER "postgres-user";
 # GRANT ALL PRIVILEGES ON DATABASE search_app_psql_db TO "postgres-user";
+# PGPASSWORD=QqqgJrsEeBiPIYbxGRSUJXVGqYvOgWRM psql -h dpg-cs3mtu0gph6c73c4im3g-a.oregon-postgres.render.com -U demo_stor_dev_db_user demo_stor_dev_db
+
+
+# Usage:
+# ./migrations/migrate_psql_dev.sh create  # To create new migration
+# ./migrations/migrate_psql_dev.sh upgrade  # To apply migrations

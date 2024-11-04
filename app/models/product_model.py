@@ -14,6 +14,7 @@ class Product(Base):
         
     id = Column(UUID, primary_key=True, index=True)
     name = Column(String(255), nullable=True)
+    title = Column(String(255), nullable=True)
     description = Column(Text, nullable=True)
     price = Column(Float, nullable=True)
     rating = Column(Float, nullable=True)

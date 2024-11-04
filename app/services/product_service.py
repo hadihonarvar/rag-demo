@@ -65,7 +65,6 @@ async def create_product(product_dto: ProductDTO, psql_db_session: Session, qdra
     return {"message": "Product created successfully"}
 
 
-    
 # async def add_point(collection_name: str, point: Point):
 #     log.info(f"Adding point to collection {collection_name}")
 #     try:
