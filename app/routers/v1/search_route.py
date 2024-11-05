@@ -5,7 +5,8 @@ from qdrant_client import QdrantClient, models
 from qdrant_client.http.models import PointStruct, VectorParams
 from app.utils.logger import log
 import uuid
-from app.services.openAI_service import get_openAI_embedding, get_openAI_image_description
+# from app.services.openAI_service import get_openAI_embedding, get_openAI_image_description
+from app.services import qdrant_service, openAI_service
 
 
 router = APIRouter(prefix='/api/search')
@@ -13,11 +14,12 @@ router = APIRouter(prefix='/api/search')
 # curl -X 'GET' 'http://localhost:9000/api/search/search_query?query=blue%20shrit%20form%20men' -H 'accept: application/json'
 @router.get("/search_query")
 async def search_query(query: str):
-    log.info("Getting embedding1")
+    log.info("Getting embedding")
+    search_query_embedding_vector = await openAI_service.get_openAI_embedding(query)
+    log.info("search_query_embedding_vector: ", search_query_embedding_vector)
+    nearest_points = await qdrant_service.search(collection_name="products", query_vector=search_query_embedding_vector)
+    return {"nearest points": nearest_points}
 
-    # parsed_query = parse_query(query)
-    emb = await get_openAI_embedding("sample product info")
-    return {"embedding": emb}
 
 @router.post("/search_image")
 async def search_image(image: UploadFile = File(...)):

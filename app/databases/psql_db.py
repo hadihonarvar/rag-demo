@@ -13,7 +13,11 @@ Base = declarative_base()
 async def get_psql_db():
     log.info("Creating PostgreSQL session")
     async with SessionLocal() as session:
-        yield session
+        try:
+            yield session
+        finally:
+            await session.close()
+            log.info("PostgreSQL session closed")
 
 async def init_psql_db(app):
     @app.on_event("startup")
@@ -24,4 +28,6 @@ async def init_psql_db(app):
     async def shutdown_event():
         # Any shutdown logic for PostgreSQL
         log.info("Disconnecting from PostgreSQL")
+        await engine.dispose()
+
 

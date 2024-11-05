@@ -21,17 +21,20 @@ client voice
 pagination for results 
 
 
-done: 
+
 config:
     - env sepration dev local prod done
     - run scripts per environment done
+
 migrations:
     - psql done 
     - qdrant (left)
+
 controller/router layer 
     - qdrant crud 
     - product crud 
     - store (left)
+
 service layer 
     - aws (left)
     - openAI get embedding done
@@ -56,6 +59,17 @@ misc
     - project set up done 
     - docker (left)
     - api and build versioning done 
+
+
+P1 milestones: 
+    backend:
+        products info are store in psql and qdrant db 
+        hosting and deployement
+        
+
+    client: 
+        demo store project set up 
+        demo project set up 
 
 
 

@@ -29,7 +29,7 @@ class QueryPoint(BaseModel):
 async def create_collection(collection: Collection):
     log.info(f"Creating collection {collection.name}")
     try:
-        collection = await qdrant_client.create_collection(
+        collection = qdrant_client.create_collection(
             collection_name=collection.name,
             vectors_config=models.VectorParams(
                 size=collection.size,
@@ -45,7 +45,7 @@ async def create_collection(collection: Collection):
 async def update_collection(collection: Collection):
     log.info(f"Updating collection {collection.name}")
     try:
-        collection = await qdrant_client.update_collection(
+        collection = qdrant_client.update_collection(
             collection_name=collection.name,
             vectors_config=models.VectorParams(
                 size=collection.size,
@@ -60,16 +60,25 @@ async def update_collection(collection: Collection):
 async def get_collection(collection_name: str):
     log.info(f"Getting collection {collection_name}")
     try:
-        collection = await qdrant_client.get_collection(collection_name=collection_name)
+        collection = qdrant_client.get_collection(collection_name=collection_name)
         return collection
     except Exception as e:
         log.error(f"Error getting collection: {e}")
         raise HTTPException(status_code=400, detail="Error getting collection")
     
+async def collection_exists(collection_name:str):
+    log.info(f"Checking if collection exists {collection_name}")
+    try:
+        collection = qdrant_client.collection_exists(collection_name="{collection_name}")
+        return collection
+    except Exception as e:
+        log.error(f"Error getting collection: {e}")
+        raise HTTPException(status_code=400, detail="Error getting collection")
+
 async def get_collections():
     log.info(f"Getting all collections")
     try:
-        collections = await qdrant_client.get_collections()
+        collections = qdrant_client.get_collections()
         log.info(f"collections: {collections}")
         return collections
     except Exception as e:
@@ -79,7 +88,7 @@ async def get_collections():
 async def delete_collection(collection_name: str):
     log.info(f"Deleting collection {collection_name}")
     try:
-        collection = await qdrant_client.delete_collection(collection_name=collection_name)
+        collection = qdrant_client.delete_collection(collection_name=collection_name)
         return collection
     except Exception as e:
         log.error(f"Error deleting collection: {e}")
@@ -88,11 +97,11 @@ async def delete_collection(collection_name: str):
 async def add_point(collection_name: str, point: Point):
     log.info(f"Adding point to collection {collection_name}")
     try:
-        point = await qdrant_client.upsert(
+        point = qdrant_client.upsert(
             collection_name=collection_name,
             points=[models.PointStruct(
                 id=str(point.id),
-                vector={"text":point.vector},
+                vector=point.vector,
                 payload=point.payload
             )]
         )
@@ -106,7 +115,7 @@ async def update_point(collection_name: str, point: Point):
 
 async def get_point(collection_name: str, id: str):
     try:
-        points = await qdrant_client.retrieve(
+        points = qdrant_client.retrieve(
             collection_name=collection_name,
             ids=[id]
         )
@@ -115,9 +124,22 @@ async def get_point(collection_name: str, id: str):
         log.error(f"Error getting point: {e}")
         raise HTTPException(status_code=400, detail="Error getting point")
     
-async def get_all_points(collection_name: str):
+async def search(collection_name: str, query_vector: List[float], limit: Optional[int] = 10):
+    log.info(f"Searching for vetor: {query_vector}")
     try:
         points = await qdrant_client.search(
+            collection_name=collection_name,
+            query_vector=query_vector,
+            limit=limit
+        )
+        return points
+    except Exception as e:
+        log.error(f"Error getting points: {e}")
+        raise HTTPException(status_code=400, detail="Error getting points")
+    
+async def get_all_points(collection_name: str):
+    try:
+        points = qdrant_client.search(
             collection_name=collection_name,
             query_vector=[0,0,0,0],
             limit=100
@@ -127,21 +149,9 @@ async def get_all_points(collection_name: str):
         log.error(f"Error getting all points: {e}")
         raise HTTPException(status_code=400, detail="Error getting all points")
     
-async def get_point(collection_name: str, query: QueryPoint):
-    try:
-        points = await qdrant_client.search(
-            collection_name=collection_name,
-            query_vector=query.vector,
-            limit=query.top
-        )
-        return points
-    except Exception as e:
-        log.error(f"Error getting points: {e}")
-        raise HTTPException(status_code=400, detail="Error getting points")
-    
 async def delete_point(collection_name: str, id: str):
     try:
-        points = await qdrant_client.delete(
+        points = qdrant_client.delete(
             collection_name=collection_name,
             points_selector=models.PointIdsList(
                 points=[id]

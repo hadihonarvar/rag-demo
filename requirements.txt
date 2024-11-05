@@ -26,3 +26,4 @@ alembic==1.13.3
 python-multipart==0.0.12
 asyncpg==0.29.0
 ShopifyAPI==12.6.0
+greenlet==3.1.1
