@@ -1,6 +1,3 @@
-# rag-demo
-
-
 # FastAPI RAG Demo
 
 A demo of a Retrieval-Augmented Generation (RAG) application using FastAPI, OpenAI, and Qdrant. This project allows you to store documents in a vector database, retrieve information, and ask questions based on stored data.
@@ -33,14 +30,16 @@ A demo of a Retrieval-Augmented Generation (RAG) application using FastAPI, Open
 ### Running the Project
 
 1. **Clone the repository:**
-   git clone <repository-url>
-   cd <repository-directory>
+   `git clone git@github.com:hadihonarvar/rag-demo.git`
+   `cd rag-demo`
 
 2. **Configure environment variables:**
    - Add your OpenAI API key and Qdrant DB information to the `.env.local` file.
+   - For Qdrant, it is already set up a free tier, change it to your own instance if needed.
+   - For OpenAI api key, find yours here: [OPEN AI APIKEY](https://platform.openai.com/api-keys)
 
 3. **Start the FastAPI app:**
-   uvicorn app.main:app --reload
+   `bash ./run.sh`
 
 ---
 
