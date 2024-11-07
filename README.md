@@ -16,9 +16,13 @@ A demo of a basic Retrieval-Augmented Generation (RAG) application using FastAPI
 
 1. **Clone the repository:**
 
-   ```git clone git@github.com:hadihonarvar/rag-demo.git```
+   ```
+   git clone git@github.com:hadihonarvar/rag-demo.git
+   ```
 
-   ```cd rag-demo```
+   ```
+   cd rag-demo
+   ```
 
 2. **Configure environment variables:**
    - Add your OpenAI API key and Qdrant DB information to the `.env.local` file.
@@ -27,7 +31,9 @@ A demo of a basic Retrieval-Augmented Generation (RAG) application using FastAPI
 
 3. **Start the FastAPI app:**
 
-   ```bash ./run.sh```
+   ```
+   bash ./run.sh
+   ```
 
 ---
 
