@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTAINER_PREFIX="demo-store"
+CONTAINER_PREFIX="demo-rag"
 
 python3 -m venv venv
 source venv/bin/activate activate
