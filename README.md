@@ -8,7 +8,7 @@ A demo of a Retrieval-Augmented Generation (RAG) application using FastAPI, Open
 ---
 
 ## Project Structure
-
+```
 .
 ├── app/
 │   ├── routers/            # API route definitions
@@ -18,6 +18,7 @@ A demo of a Retrieval-Augmented Generation (RAG) application using FastAPI, Open
 │   └── main.py             # Entry point for FastAPI and app setup
 ├── .env.local              # Environment variables (OpenAI API key, Qdrant DB info)
 └── README.md               # Project documentation
+```
 
 ---
 
@@ -49,11 +50,15 @@ To use Qdrant for document storage and retrieval, follow these steps:
 
 1. **Create a collection:**
     `docs` is already created. set the size to `1536` matching embedding vector size. 
+    ```
     curl -X POST "http://localhost:9000/api/qdrant/collections/create_collection" -H  "Content-Type: application/json" --data-raw '{"name": "docs", "size": 1536, "distance": "Cosine"}'
+    ```
+    
 
 
 2. **Add documents to the collection:**
    - Ensure your document is valid JSON and its content are plain text. Use [JSONLint](https://jsonlint.com/) to validate.
+   ```
    curl -X 'POST' 'http://localhost:9000/api/index/add_doc' \
     -H 'accept: application/json' \
     -H 'Content-Type: application/json' \
@@ -61,22 +66,24 @@ To use Qdrant for document storage and retrieval, follow these steps:
         "doc": "your long document text here...",    
         "collection_name": "docs"
     }'
+    ```
 
 3. **Ask a question based on your documents:**
    - This will query the stored documents and use OpenAI's API to generate an answer.
-   
+   ```
    curl -X POST "http://localhost:8000/ask" \
    -H "accept: application/json" \
    -H "Content-Type: application/json" \
    -d "{\"question\":\"What is the capital of France?\"}"
-
+    ```
 ---
 
 ## API Endpoints
 
    - Accepts a JSON payload with a question and returns an answer based on stored documents.
-
+    ```
    curl -X POST "http://localhost:9000/api/prompt" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"prompt\": \"tell me about company and its mission\", \"collection_name\": \"docs\"}"
+   ```
 
 
 ---
