@@ -2,12 +2,9 @@
 *.obj
 *.pyc
 
-# Exclude development-specific files
 .vscode
 .idea
 
-# Exclude sensitive files
 secrets/
 
-# Exclude cache directories
 cache/

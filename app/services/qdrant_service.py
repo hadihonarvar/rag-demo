@@ -19,7 +19,7 @@ class Collection(BaseModel):
 class Point(BaseModel):
     id: Optional[UUID4] = uuid.uuid4()
     vector: List[float]
-    payload: Optional[dict] = {} # we can add prev_chunck_id, next_chunk_id, url, chunk, psql_id
+    payload: Optional[dict] = {} # customize metadata for filtering if needed.
     
 class QueryPoint(BaseModel):
     vector: List[float]
@@ -76,7 +76,7 @@ async def collection_exists(collection_name:str):
         raise HTTPException(status_code=400, detail="Error getting collection")
 
 async def get_collections():
-    log.info(f"Getting all collections")
+    log.info(f"Getting all collections...")
     try:
         collections = qdrant_client.get_collections()
         log.info(f"collections: {collections}")
@@ -109,6 +109,18 @@ async def add_point(collection_name: str, point: Point):
     except Exception as e:
         log.error(f"Error adding point: {e}")
         raise HTTPException(status_code=400, detail="Error adding point")
+    
+async def add_points(collection_name: str, points: List[Point]):
+    log.info(f"Adding points to collection {collection_name}")
+    log.info(f"points: {points}")
+    try:
+        return qdrant_client.upload_points(
+            collection_name=collection_name,
+            points=points
+        )
+    except Exception as e:
+        log.error(f"Error adding points: {e}")
+        raise HTTPException(status_code=400, detail="Error adding points")
 
 async def update_point(collection_name: str, point: Point):
     pass
@@ -127,7 +139,7 @@ async def get_point(collection_name: str, id: str):
 async def search(collection_name: str, query_vector: List[float], limit: Optional[int] = 10):
     log.info(f"Searching for vetor: {query_vector}")
     try:
-        points = await qdrant_client.search(
+        points = qdrant_client.search(
             collection_name=collection_name,
             query_vector=query_vector,
             limit=limit
@@ -141,7 +153,7 @@ async def get_all_points(collection_name: str):
     try:
         points = qdrant_client.search(
             collection_name=collection_name,
-            query_vector=[0,0,0,0],
+            query_vector=[0] * 1536,
             limit=100
         )
         return points

@@ -2,16 +2,13 @@ from qdrant_client import QdrantClient
 from app.config import settings
 from app.utils.logger import log
 
-# Initialize Qdrant Client
-# qdrant_client = QdrantClient(
-#     host=settings.DB_QDRANT_HOST,
-#     port=settings.DB_QDRANT_PORT,
-# )
+# connecting to qdrant could. 
 qdrant_client = QdrantClient(
     url=settings.DB_QDRANT_API_URL,
     api_key=settings.DB_QDRANT_API_KEY,
 )
 
+# for locally hosted qdrant
 async def get_qdrant_db(app):
     @app.on_event("startup")
     async def startup_event():

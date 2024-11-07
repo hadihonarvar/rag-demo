@@ -18,47 +18,17 @@ openai.api_key = settings.OPENAI_API_KEY
 async def get_openAI_embedding(text: str):
     log.info(f"Getting embedding for {text}")
     response = openai.embeddings.create(model="text-embedding-ada-002", input=[text]) # embedding size: 1536
-    # log.info(f"Embedding Response: {response}")
-    # return res
-    # response = openai.Embedding.create(
-    #     model="text-embedding-ada-002",
-    #     input=text
-    # )
     log.info(f"Response: {len(response.data[0].embedding)}") 
-
     return response.data[0].embedding
 
-# async def get_embedding_tmp(text: str) -> List[float]:
-    # model_name = "huggingface/llama-3b"
-    # tokenizer = AutoTokenizer.from_pretrained(model_name)
-    # model = AutoModel.from_pretrained(model_name)
-    
-    
-    # inputs = tokenizer(text, return_tensors="pt")
-    # outputs = model(**inputs)
-    # return outputs.last_hidden_state.mean(dim=1).detach().numpy().tolist()
 
-    # text_chunk = "sample product info"
-    
-    # return get_embedding(text_chunk)
-
-async def get_openAI_image_description():
-    response = openai.completions.create(
-        model="text-davinci-003",
-        messages = [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "what is in the image?"},
-                    {
-                        "type": "image",
-                        "url": "https://images.unsplash.com/photo-1551316679-9c6ae9dec224"
-                    }
-                ]
-            },
-        ],
-        max_token=300
+async def get_openAI_response(conversation):
+    log.info(f"Getting response for conversation: {conversation}")
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=conversation,
+        max_tokens=100,
+        temperature=0.5
     )
-
-    return response.choices[0]
+    return response
 

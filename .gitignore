@@ -2,8 +2,8 @@
 **/.DS_Store
 **/node_modules
 **/.git
-.env
-.env.*
+# .env
+# .env.*
 *.pem
 *.pyc 
 *.pyo 

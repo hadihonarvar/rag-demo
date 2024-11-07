@@ -5,7 +5,7 @@ protobuf==4.21.6
 typing-extensions==4.12.1
 python-dotenv==1.0.0
 fastapi==0.115.0
-openai==1.50.2
+openai==1.54.3
 qdrant-client==1.9.1
 coloredlogs==15.0.1
 torch==2.2.2
@@ -16,14 +16,10 @@ beautifulsoup4==4.12.3
 scikit-learn==1.5.2
 asyncpg==0.29.0
 uvicorn==0.31.0
-sqlalchemy==2.0.35
-boto3==1.35.34
 pydantic==2.9.2
 fastapi-limiter==0.1.6
 slowapi==0.1.9
 aiohttp==3.10.9
-alembic==1.13.3
 python-multipart==0.0.12
 asyncpg==0.29.0
-ShopifyAPI==12.6.0
 greenlet==3.1.1
