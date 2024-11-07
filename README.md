@@ -1,37 +1,23 @@
 # FastAPI RAG Demo
 
-A demo of a Retrieval-Augmented Generation (RAG) application using FastAPI, OpenAI, and Qdrant. This project allows you to store documents in a vector database, retrieve information, and ask questions based on stored data.
-
----
-
-## Project Structure
-```
-.
-├── app/
-│   ├── routers/            # API route definitions
-│   ├── services/           # Business logic and integrations with OpenAI & Qdrant
-│   ├── utils/              # Utility functions (e.g., text processing)
-│   ├── config/             # Configuration settings, including environment variables
-│   └── main.py             # Entry point for FastAPI and app setup
-├── .env.local              # Environment variables (OpenAI API key, Qdrant DB info)
-└── README.md               # Project documentation
-```
+A demo of a basic Retrieval-Augmented Generation (RAG) application using FastAPI, OpenAI, and Qdrant. This project allows you to store documents in a vector database, retrieve information, and ask questions based on stored data.
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- **Python** 3.8+
+- **Python** 3.9+
 - **FastAPI**
-- **Docker** (for running Qdrant DB)
+- **Qdrant API key**
 - **OpenAI API Key**
 
 ### Running the Project
 
 1. **Clone the repository:**
-   `git clone git@github.com:hadihonarvar/rag-demo.git`
-   `cd rag-demo`
+   ```git clone git@github.com:hadihonarvar/rag-demo.git```
+
+   ```cd rag-demo```
 
 2. **Configure environment variables:**
    - Add your OpenAI API key and Qdrant DB information to the `.env.local` file.
@@ -39,7 +25,7 @@ A demo of a Retrieval-Augmented Generation (RAG) application using FastAPI, Open
    - For OpenAI api key, find yours here: [OPEN AI APIKEY](https://platform.openai.com/api-keys)
 
 3. **Start the FastAPI app:**
-   `bash ./run.sh`
+   ```bash ./run.sh```
 
 ---
 
@@ -77,16 +63,6 @@ To use Qdrant for document storage and retrieval, follow these steps:
     ```
 ---
 
-## API Endpoints
-
-   - Accepts a JSON payload with a question and returns an answer based on stored documents.
-    ```
-   curl -X POST "http://localhost:9000/api/prompt" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"prompt\": \"tell me about company and its mission\", \"collection_name\": \"docs\"}"
-   ```
-
-
----
-
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request.
@@ -100,4 +76,3 @@ This project is licensed under the MIT License.
 ---
 
 Happy querying!
-
