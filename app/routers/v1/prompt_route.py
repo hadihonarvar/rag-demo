@@ -12,9 +12,15 @@ from app.services.openAI_service import get_openAI_embedding
 
 router = APIRouter(prefix='/api/prompt')
 
-# curl -X 'GET' 'http://localhost:9000/api/prompt?collection_name=docs&prompt=tell%20me%20about%company%20and%20its%20mission' -H 'accept: application/json'
-@router.get("")
-async def prompt_query(prompt: str, collection_name: str):
+class PromptRequest(BaseModel):
+    prompt: str
+    collection_name: str
+
+# curl -X POST "http://localhost:9000/api/prompt" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"prompt\": \"tell me about company and its mission\", \"collection_name\": \"docs\"}"
+@router.post("")
+async def prompt_query(request: PromptRequest):
+    prompt = request.prompt
+    collection_name = request.collection_name
     log.info(f"Getting embedding for prompt: {prompt}")
     prompt_embedding_vector = await openAI_service.get_openAI_embedding(prompt)
     log.info(f"prompt_embedding_vector: {prompt_embedding_vector}")

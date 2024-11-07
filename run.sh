@@ -10,4 +10,3 @@ pip install -r requirements.txt
 export FASTAPI_APP=./run.py
 
 python3 ./run.py
-
